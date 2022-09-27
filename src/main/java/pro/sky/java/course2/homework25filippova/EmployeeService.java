@@ -1,12 +1,14 @@
 package pro.sky.java.course2.homework25filippova;
 
+import java.util.Collection;
+
 public interface EmployeeService {
 
-    void addEmployee(Employee employee);
+    Employee addEmployee(Employee employee);
 
-    void removeEmployee(Employee employee);
+    Employee removeEmployee(Employee employee);
 
     Employee findEmployee(Employee employee);
 
-    String printListOfEmployees();
+    Collection<Employee> printListOfEmployees();
 }
