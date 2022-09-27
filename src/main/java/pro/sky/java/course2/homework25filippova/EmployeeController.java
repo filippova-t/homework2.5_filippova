@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import pro.sky.java.course2.homework25filippova.exception.EmployeeAlreadyAddedException;
 import pro.sky.java.course2.homework25filippova.exception.EmployeeNotFoundException;
 
+import java.util.Collection;
+
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
@@ -18,40 +20,25 @@ public class EmployeeController {
 
 
     @GetMapping("/add")
-    public String addEmpl(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
-        Employee employee = new Employee(firstName, lastName);
-        try {
-            employeeService.addEmployee(employee);
-        } catch (EmployeeAlreadyAddedException e) {
-            return "Сотрудник уже есть в списке";
-        }
-        return employee.toString();
+    public Employee addEmpl(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
+       Employee employee = new Employee(firstName, lastName);
+        return employeeService.addEmployee(employee);
     }
 
     @GetMapping("/remove")
-    public String removeEmpl (@RequestParam ("firstName") String firstName, @RequestParam ("lastName") String lastName) {
+    public Employee removeEmpl (@RequestParam ("firstName") String firstName, @RequestParam ("lastName") String lastName) {
         Employee employee = new Employee(firstName, lastName);
-        try {
-            employeeService.removeEmployee(employee);
-        } catch (EmployeeNotFoundException e) {
-            return "Сотрудник отсутствует в списке";
-        }
-        return employee.toString();
+        return employeeService.removeEmployee(employee);
     }
 
     @GetMapping("/find")
-    public String findEmpl (@RequestParam ("firstName") String firstName, @RequestParam ("lastName") String lastName) {
+    public Employee findEmpl (@RequestParam ("firstName") String firstName, @RequestParam ("lastName") String lastName) {
         Employee employee = new Employee(firstName, lastName);
-        try {
-            employeeService.findEmployee(employee);
-        } catch (EmployeeNotFoundException e) {
-            return "Сотрудник отсутствует в списке";
-        }
-        return employee.toString();
+        return employeeService.findEmployee(employee);
     }
 
-    @GetMapping("/list")
-    public String printListOfEmpl () {
+    @GetMapping()
+    public Collection<Employee> printListOfEmpl () {
         return employeeService.printListOfEmployees();
     }
 }

@@ -1,5 +1,7 @@
 package pro.sky.java.course2.homework25filippova;
 
+import java.util.Objects;
+
 public class Employee {
     private String firstName;
     private String lastName;
@@ -19,9 +21,22 @@ public class Employee {
         return lastName;
     }
 
+
+    public String getFullName () {
+        return firstName + " " + lastName;}
+
+    /*@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Employee)) return false;
+        Employee employee = (Employee) o;
+        return getFirstName().equals(employee.getFirstName()) && getLastName().equals(employee.getLastName());
+    }*/
+
+
     @Override
-    public int hashCode () {
-        return java.util.Objects.hash(firstName, lastName);
+    public int hashCode() {
+        return java.util.Objects.hash(getFirstName(), getLastName());
     }
 
     @Override
@@ -30,11 +45,19 @@ public class Employee {
             return false;
         }
         Employee employee = (Employee) other;
-        return firstName.equals(employee.firstName) && lastName.equals(employee.lastName);
+        return getFirstName().equals(employee.getFirstName()) && getLastName().equals(employee.getLastName());
     }
 
     @Override
-    public String toString () {
-        return "\"firstName\": \"" + firstName + "\", \"lastName\": \"" + lastName + "\"";
+    public String toString() {
+        return "Employee{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
     }
+
+    /*@Override
+    public String toString() {
+        return "\"firstName\": \"" + firstName + "\", \"lastName\": \"" + lastName + "\"";
+    }*/
 }
