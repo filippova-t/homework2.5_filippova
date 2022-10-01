@@ -5,6 +5,7 @@ import pro.sky.java.course2.homework25filippova.exception.EmployeeAlreadyAddedEx
 import pro.sky.java.course2.homework25filippova.exception.EmployeeNotFoundException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 
@@ -14,7 +15,10 @@ public class EmployeeServiceImpl implements EmployeeService{
         this.employees = new HashMap<>();
     }
 
-
+    @Override
+    public Map<String, Employee> getEmployees() {
+        return employees;
+    }
 
     @Override
     public Employee addEmployee(Employee employee) {
@@ -46,5 +50,35 @@ public class EmployeeServiceImpl implements EmployeeService{
     public Collection<Employee> printListOfEmployees() {
         return Collections.unmodifiableCollection(employees.values());
     }
+
+    @Override
+    public int calculateSumOfSalaryPerMonth() {
+        int sum;
+        List<Integer> salaries =
+        employees.values().stream()
+                .map(e -> e.getSalary())
+                .collect(Collectors.toList());
+        sum = salaries.stream().mapToInt(e -> (int)e)
+                .sum();
+        return sum;
+    }
+
+    @Override
+    public Employee findEmployeeWithMinimumSalary() {
+        Employee employeeWithMinimumSalary = employees.values().stream()
+                .min(Comparator.comparingInt(employee -> employee.getSalary()))
+                .get();
+        return employeeWithMinimumSalary;
+    }
+
+
+    @Override
+    public Employee findEmployeeWithMaximumSalary() {
+        Employee employeeWithMinimumSalary = employees.values().stream()
+                .max(Comparator.comparingInt(employee -> employee.getSalary()))
+                .get();
+        return employeeWithMinimumSalary;
+    }
+
 
 }
