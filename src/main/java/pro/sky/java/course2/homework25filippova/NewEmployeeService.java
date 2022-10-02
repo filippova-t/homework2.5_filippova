@@ -1,6 +1,7 @@
 package pro.sky.java.course2.homework25filippova;
 
 import java.util.List;
+import java.util.Map;
 
 public interface NewEmployeeService {
 
@@ -11,5 +12,5 @@ public interface NewEmployeeService {
 
     List<Employee> printListOfEmployeesInDepartment(int departmentId);
 
-    List <Employee> printListOfEmployees();
+    Map<Integer, List<Employee>> printEmployeeGroupByDepartment();
 }

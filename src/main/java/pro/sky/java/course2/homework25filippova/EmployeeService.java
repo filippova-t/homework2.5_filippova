@@ -22,7 +22,4 @@ public interface EmployeeService {
     Employee findEmployeeWithMaximumSalary();
 
 
-    //Employee findEmployeeWithMinimalSalaryInDepartment(int departmentId);
-
-   // Employee findEmployeeWithMaximalSalaryInDepartment(int departmentId);
 }

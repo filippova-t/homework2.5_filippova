@@ -65,20 +65,20 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public Employee findEmployeeWithMinimumSalary() {
-        Employee employeeWithMinimumSalary = employees.values().stream()
+        return employees.values().stream()
                 .min(Comparator.comparingInt(employee -> employee.getSalary()))
                 .get();
-        return employeeWithMinimumSalary;
+
     }
 
 
     @Override
     public Employee findEmployeeWithMaximumSalary() {
-        Employee employeeWithMinimumSalary = employees.values().stream()
+        return employees.values().stream()
                 .max(Comparator.comparingInt(employee -> employee.getSalary()))
                 .get();
-        return employeeWithMinimumSalary;
     }
 
 
-}
+
+    }
