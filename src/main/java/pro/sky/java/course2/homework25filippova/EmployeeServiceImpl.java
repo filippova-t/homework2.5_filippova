@@ -4,52 +4,81 @@ import org.springframework.stereotype.Service;
 import pro.sky.java.course2.homework25filippova.exception.EmployeeAlreadyAddedException;
 import pro.sky.java.course2.homework25filippova.exception.EmployeeNotFoundException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+
 @Service
 
 public class EmployeeServiceImpl implements EmployeeService{
-    List<Employee> employees = new ArrayList<> (List.of(
-            new Employee("Иван","Иванов"),
-            new Employee("Петр","Петров"),
-            new Employee("Семен","Семенов"),
-            new Employee("Александр","Александров"),
-            new Employee("Илья","Ильин"),
-            new Employee("Денис","Денисов"),
-            new Employee("Светлана","Сорокина"),
-            new Employee("Ксения","Кукушкина"),
-            new Employee("Ольга","Лебедева"),
-            new Employee("Ирина","Журавлева")
-
-    ));
-    @Override
-    public void addEmployee(Employee employee) {
-        if (employees.contains(employee)) {
-            throw new EmployeeAlreadyAddedException("Данный сотрудник уже есть в списке");
-        }
-        employees.add(employee);
+    private final Map<String, Employee> employees;
+    public EmployeeServiceImpl() {
+        this.employees = new HashMap<>();
     }
 
     @Override
-    public void removeEmployee(Employee employee) {
-        if (!employees.contains(employee) || employee == null) {
+    public Map<String, Employee> getEmployees() {
+        return employees;
+    }
+
+    @Override
+    public Employee addEmployee(Employee employee) {
+        if (employees.containsKey(employee.getFullName())) {
+            throw new EmployeeAlreadyAddedException("Данный сотрудник уже есть в списке");
+        }
+        employees.put(employee.getFullName(), employee);
+        return employee;
+    }
+
+    @Override
+    public Employee removeEmployee(Employee employee) {
+        if (!employees.containsKey(employee.getFullName())) {
             throw new EmployeeNotFoundException("Сотрудник не найден");
         }
-        employees.remove(employee);
+        return employees.remove(employee.getFullName());
 
     }
 
     @Override
     public Employee findEmployee(Employee employee) {
-        if (employees.contains(employee)) {
-            return employee;
+        if (employees.containsKey(employee.getFullName())) {
+            return employees.get(employee.getFullName());
         } else {
             throw new EmployeeNotFoundException("Сотрудник не найден");
         }
     }
     @Override
-    public String printListOfEmployees () {
-        return employees.toString();
+    public Collection<Employee> printListOfEmployees() {
+        return Collections.unmodifiableCollection(employees.values());
     }
 
-}
+    @Override
+    public int calculateSumOfSalaryPerMonth() {
+        int sum;
+        List<Integer> salaries =
+        employees.values().stream()
+                .map(e -> e.getSalary())
+                .collect(Collectors.toList());
+        sum = salaries.stream().mapToInt(e -> (int)e)
+                .sum();
+        return sum;
+    }
+
+    @Override
+    public Employee findEmployeeWithMinimumSalary() {
+        return employees.values().stream()
+                .min(Comparator.comparingInt(employee -> employee.getSalary()))
+                .get();
+
+    }
+
+
+    @Override
+    public Employee findEmployeeWithMaximumSalary() {
+        return employees.values().stream()
+                .max(Comparator.comparingInt(employee -> employee.getSalary()))
+                .get();
+    }
+
+
+
+    }
