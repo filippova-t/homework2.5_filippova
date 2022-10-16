@@ -1,8 +1,10 @@
 package pro.sky.java.course2.homework25filippova;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.java.course2.homework25filippova.exception.EmployeeAlreadyAddedException;
 import pro.sky.java.course2.homework25filippova.exception.EmployeeNotFoundException;
+import pro.sky.java.course2.homework25filippova.exception.IllegalSymbol;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -24,6 +26,13 @@ public class EmployeeServiceImpl implements EmployeeService{
     public Employee addEmployee(Employee employee) {
         if (employees.containsKey(employee.getFullName())) {
             throw new EmployeeAlreadyAddedException("Данный сотрудник уже есть в списке");
+        }
+        else if (!StringUtils.isAlpha(employee.getFirstName()) || (!StringUtils.isAlpha(employee.getLastName()))) {
+            throw new IllegalSymbol("Имя или фамилия содержат недопустимые символы");
+        }
+        else if (!StringUtils.equals(employee.getFirstName(), StringUtils.capitalize(employee.getFirstName())) ||
+                !StringUtils.equals(employee.getLastName(), StringUtils.capitalize(employee.getLastName()))) {
+            throw new IllegalSymbol("Имя или фамилия начинаются не с заглавной буквы");
         }
         employees.put(employee.getFullName(), employee);
         return employee;

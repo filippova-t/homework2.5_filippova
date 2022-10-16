@@ -14,7 +14,6 @@ public class NewEmployeeServiceImpl implements NewEmployeeService {
         this.employeeService = employeeService;
     }
 
-    //NewEmployeeService newEmployeeService = new NewEmployeeServiceImpl(employeeService);
 
     @Override
     public Employee findEmployeeWithMinSalaryInDepartment(int departmentId) {
