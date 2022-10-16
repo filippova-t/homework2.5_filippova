@@ -11,8 +11,9 @@ import java.util.stream.Collectors;
 
 @Service
 
-public class EmployeeServiceImpl implements EmployeeService{
+public class EmployeeServiceImpl implements EmployeeService {
     private final Map<String, Employee> employees;
+
     public EmployeeServiceImpl() {
         this.employees = new HashMap<>();
     }
@@ -24,15 +25,9 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public Employee addEmployee(Employee employee) {
+        checkName(employee.getFirstName(), employee.getLastName());
         if (employees.containsKey(employee.getFullName())) {
             throw new EmployeeAlreadyAddedException("Данный сотрудник уже есть в списке");
-        }
-        else if (!StringUtils.isAlpha(employee.getFirstName()) || (!StringUtils.isAlpha(employee.getLastName()))) {
-            throw new IllegalSymbol("Имя или фамилия содержат недопустимые символы");
-        }
-        else if (!StringUtils.equals(employee.getFirstName(), StringUtils.capitalize(employee.getFirstName())) ||
-                !StringUtils.equals(employee.getLastName(), StringUtils.capitalize(employee.getLastName()))) {
-            throw new IllegalSymbol("Имя или фамилия начинаются не с заглавной буквы");
         }
         employees.put(employee.getFullName(), employee);
         return employee;
@@ -40,6 +35,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public Employee removeEmployee(Employee employee) {
+        checkName(employee.getFirstName(), employee.getLastName());
         if (!employees.containsKey(employee.getFullName())) {
             throw new EmployeeNotFoundException("Сотрудник не найден");
         }
@@ -49,12 +45,14 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public Employee findEmployee(Employee employee) {
+        checkName(employee.getFirstName(), employee.getLastName());
         if (employees.containsKey(employee.getFullName())) {
             return employees.get(employee.getFullName());
         } else {
             throw new EmployeeNotFoundException("Сотрудник не найден");
         }
     }
+
     @Override
     public Collection<Employee> printListOfEmployees() {
         return Collections.unmodifiableCollection(employees.values());
@@ -64,10 +62,10 @@ public class EmployeeServiceImpl implements EmployeeService{
     public int calculateSumOfSalaryPerMonth() {
         int sum;
         List<Integer> salaries =
-        employees.values().stream()
-                .map(e -> e.getSalary())
-                .collect(Collectors.toList());
-        sum = salaries.stream().mapToInt(e -> (int)e)
+                employees.values().stream()
+                        .map(e -> e.getSalary())
+                        .collect(Collectors.toList());
+        sum = salaries.stream().mapToInt(e -> (int) e)
                 .sum();
         return sum;
     }
@@ -88,6 +86,12 @@ public class EmployeeServiceImpl implements EmployeeService{
                 .get();
     }
 
+    @Override
+    public void checkName(String firstName, String lastName) {
+    if((!StringUtils.isAlpha(firstName))||(!StringUtils.isAlpha(lastName))) {
+        throw new IllegalSymbol("Имя или фамилия содержат недопустимые символы");
+    }
+}
 
 
     }

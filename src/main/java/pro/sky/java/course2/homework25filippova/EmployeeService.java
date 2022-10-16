@@ -22,4 +22,5 @@ public interface EmployeeService {
     Employee findEmployeeWithMaximumSalary();
 
 
+    void checkName(String firstName, String lastName);
 }
