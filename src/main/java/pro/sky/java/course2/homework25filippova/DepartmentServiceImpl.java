@@ -1,16 +1,15 @@
 package pro.sky.java.course2.homework25filippova;
 
 import org.springframework.stereotype.Service;
-import pro.sky.java.course2.homework25filippova.exception.EmployeeAlreadyAddedException;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class NewEmployeeServiceImpl implements NewEmployeeService {
+public class DepartmentServiceImpl implements DepartmentService {
     private EmployeeService employeeService;
 
-    public NewEmployeeServiceImpl(EmployeeService employeeService) {
+    public DepartmentServiceImpl(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 

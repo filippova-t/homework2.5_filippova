@@ -10,10 +10,10 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/departments")
-public class NewEmployeeController {
-    private final NewEmployeeService newEmployeeService;
+public class DepartmentController {
+    private final DepartmentService newEmployeeService;
 
-    public NewEmployeeController(NewEmployeeService newEmployeeService) {
+    public DepartmentController(DepartmentService newEmployeeService) {
         this.newEmployeeService = newEmployeeService;
     }
 

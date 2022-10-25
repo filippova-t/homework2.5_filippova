@@ -3,7 +3,7 @@ package pro.sky.java.course2.homework25filippova;
 import java.util.List;
 import java.util.Map;
 
-public interface NewEmployeeService {
+public interface DepartmentService {
 
 
     Employee findEmployeeWithMinSalaryInDepartment(int departmentId);
