@@ -1,12 +1,26 @@
 package pro.sky.java.course2.homework25filippova;
 
+import java.util.Collection;
+import java.util.Map;
+
 public interface EmployeeService {
 
-    void addEmployee(Employee employee);
+    Map<String, Employee> getEmployees();
 
-    void removeEmployee(Employee employee);
+    Employee addEmployee(Employee employee);
+
+    Employee removeEmployee(Employee employee);
 
     Employee findEmployee(Employee employee);
 
-    String printListOfEmployees();
+    Collection<Employee> printListOfEmployees();
+
+    int calculateSumOfSalaryPerMonth();
+
+    Employee findEmployeeWithMinimumSalary();
+
+    Employee findEmployeeWithMaximumSalary();
+
+
+    void checkName(String firstName, String lastName);
 }
